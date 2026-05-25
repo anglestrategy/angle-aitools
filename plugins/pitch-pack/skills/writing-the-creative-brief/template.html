@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>[Client] [Project] — Creative Brief</title>
+<style>
+  /* CREATIVE BRIEF HUB — template
+     Replace token values with the client design system.
+     See: porting-a-client-design-system */
+
+  :root {
+    --c-surface-light: #DBE2E0;
+    --c-surface-dark:  #000000;
+    --c-text-light:    #000000;
+    --c-text-dark:     #FFFFFF;
+    --c-accent:        #00FF00;
+    --c-font:          'CLIENT_FONT', system-ui, sans-serif;
+    --c-w-light:       300;
+    --c-w-medium:      500;
+    --pad-x:           6.5%;
+    --line:            2px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--c-surface-light);
+    color: var(--c-text-light);
+    font-family: var(--c-font);
+    font-weight: var(--c-w-light);
+    font-size: 17px;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+  }
+
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--c-surface-light);
+    border-bottom: var(--line) solid var(--c-text-light);
+    padding: 24px var(--pad-x);
+    display: flex; justify-content: space-between; gap: 32px;
+  }
+  nav.top a { color: var(--c-text-light); text-decoration: none; font-size: 12px; }
+  nav.top .brand { font-weight: var(--c-w-medium); font-size: 14px; }
+
+  header.cover {
+    padding: 88px var(--pad-x) 80px;
+    border-bottom: var(--line) solid var(--c-text-light);
+    min-height: 70vh;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .cover-title {
+    font-weight: var(--c-w-medium);
+    font-size: clamp(48px, 9vw, 140px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    margin: 60px 0 40px;
+    max-width: 14ch;
+  }
+  .cover-title .accent {
+    background: var(--c-accent);
+    padding: 0 0.05em 0.04em 0.05em;
+  }
+
+  section { padding: 80px var(--pad-x); border-bottom: var(--line) solid var(--c-text-light); }
+  section h2 {
+    font-weight: var(--c-w-medium);
+    font-size: clamp(28px, 4vw, 56px);
+    line-height: 1.05;
+    margin-bottom: 40px;
+    letter-spacing: -0.02em;
+  }
+  section h2 .num { color: var(--c-accent); margin-right: 0.4em; }
+
+  /* The brief table — 11 rows of label + content */
+  .brief-table { border-top: var(--line) solid currentColor; }
+  .brief-table .row {
+    display: grid; grid-template-columns: 1.2fr 4fr; gap: 48px;
+    padding: 28px 0;
+    border-bottom: 1px solid currentColor;
+  }
+  .brief-table .row .label {
+    font-size: 11px; font-weight: var(--c-w-medium);
+    text-transform: uppercase; letter-spacing: 0.18em;
+  }
+  .brief-table .row .content { font-size: 16px; line-height: 1.55; }
+  @media (max-width: 760px) {
+    .brief-table .row { grid-template-columns: 1fr; gap: 8px; }
+  }
+
+  /* Add scoreboard, context grid, anatomy, facilities, phases, cornerstone */
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="#cover" class="brand">[CLIENT]<br>CREATIVE BRIEF</a>
+  <div>
+    <a href="#scoreboard">01 · Scoreboard</a>
+    <a href="#brief">02 · The brief</a>
+    <a href="#context">03 · Context</a>
+    <a href="#anatomy">04 · Anatomy</a>
+    <a href="#facilities">05 · Facilities</a>
+    <a href="#comparables">06 · Comparables</a>
+    <a href="#phases">07 · Phases</a>
+    <a href="#cornerstone">08 · Cornerstone</a>
+  </div>
+</nav>
+
+<header class="cover" id="cover">
+  <div style="font-size: 13px; letter-spacing: 0.02em;">[AGENCY] × [CLIENT] · CREATIVE BRIEF</div>
+  <h1 class="cover-title">[Project] <span class="accent">brief.</span></h1>
+  <p style="max-width: 60ch; font-size: 18px;">[Short strapline framing what this brief is for.]</p>
+</header>
+
+<section id="scoreboard">
+  <h2><span class="num">01</span> Scoreboard</h2>
+  <p>[What this pitch is being judged on. Criteria, weighting if available.]</p>
+</section>
+
+<section id="brief">
+  <h2><span class="num">02</span> The brief</h2>
+  <div class="brief-table">
+    <div class="row"><div class="label">Project</div>      <div class="content">[Project name and short description.]</div></div>
+    <div class="row"><div class="label">Campaign window</div><div class="content">[Dates / phasing.]</div></div>
+    <div class="row"><div class="label">Single-minded message</div><div class="content">[One sentence.]</div></div>
+    <div class="row"><div class="label">Primary audience</div><div class="content">[Audience description.]</div></div>
+    <div class="row"><div class="label">Reward they get</div><div class="content">[What the audience walks away with.]</div></div>
+    <div class="row"><div class="label">Reason to believe</div><div class="content">[Proof points.]</div></div>
+    <div class="row"><div class="label">Key insight</div>  <div class="content">[Cultural / behavioural / category insight.]</div></div>
+    <div class="row"><div class="label">Brand personality</div><div class="content">[Tone, voice, vibe.]</div></div>
+    <div class="row"><div class="label">What we do</div>   <div class="content">[The work we are commissioning.]</div></div>
+    <div class="row"><div class="label">What we don't do</div><div class="content">[Things explicitly out of scope.]</div></div>
+    <div class="row"><div class="label">Deliverables</div> <div class="content">[List of assets.]</div></div>
+  </div>
+</section>
+
+<section id="context"><h2><span class="num">03</span> Context</h2><p>[Panels for category, city, brand context.]</p></section>
+<section id="anatomy"><h2><span class="num">04</span> Anatomy</h2><p>[What the project actually is, ideally with a diagram.]</p></section>
+<section id="facilities"><h2><span class="num">05</span> Facilities</h2><p>[Categorised list of what is on the ground.]</p></section>
+<section id="comparables"><h2><span class="num">06</span> Comparables</h2><p>[Short summary linking to the full Comparable Launches page if produced.]</p></section>
+<section id="phases"><h2><span class="num">07</span> Phases</h2><p>[Rollout calendar across time.]</p></section>
+<section id="cornerstone">
+  <h2><span class="num">08</span> The cornerstone</h2>
+  <p style="font-size: clamp(28px, 4vw, 48px); font-weight: var(--c-w-medium); line-height: 1.1; max-width: 30ch; margin-bottom: 40px;">
+    [The single strategic note the work has to honour.]
+  </p>
+  <p>[Short paragraph expanding it.]</p>
+</section>
+
+</body>
+</html>

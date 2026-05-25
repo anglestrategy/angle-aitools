@@ -1,0 +1,14 @@
+{
+  "name": "angle-aitools",
+  "owner": {
+    "name": "Angle Strategy"
+  },
+  "description": "Angle Strategy's internal Claude plugins. Pitch packs, brief writers, strategy hubs, and other workflow tools the studio uses to ship faster.",
+  "plugins": [
+    {
+      "name": "pitch-pack",
+      "source": "./plugins/pitch-pack",
+      "description": "Agency pitch and strategic communication workflow. Brief, comparable launches, strategy approach hub, and Keynote export — all in the client's design system."
+    }
+  ]
+}

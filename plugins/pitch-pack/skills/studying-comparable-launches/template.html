@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>[Client] [Project] — Comparable Launches</title>
+<style>
+  /* COMPARABLE LAUNCHES — template */
+
+  :root {
+    --c-surface-light: #DBE2E0;
+    --c-surface-dark:  #000000;
+    --c-text-light:    #000000;
+    --c-text-dark:     #FFFFFF;
+    --c-accent:        #00FF00;
+    --c-font:          'CLIENT_FONT', system-ui, sans-serif;
+    --c-w-light:       300;
+    --c-w-medium:      500;
+    --pad-x:           6.5%;
+    --line:            2px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--c-surface-light);
+    color: var(--c-text-light);
+    font-family: var(--c-font);
+    font-weight: var(--c-w-light);
+    font-size: 17px;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+  }
+
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--c-surface-light);
+    border-bottom: var(--line) solid var(--c-text-light);
+    padding: 24px var(--pad-x);
+    display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap;
+  }
+  nav.top a { color: var(--c-text-light); text-decoration: none; font-size: 12px; }
+  nav.top .brand { font-weight: var(--c-w-medium); font-size: 14px; }
+
+  header.cover {
+    padding: 88px var(--pad-x) 80px;
+    border-bottom: var(--line) solid var(--c-text-light);
+    min-height: 60vh;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .cover-title {
+    font-weight: var(--c-w-medium);
+    font-size: clamp(48px, 9vw, 140px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    margin: 60px 0 40px;
+    max-width: 16ch;
+  }
+  .cover-title .accent { background: var(--c-accent); padding: 0 0.05em 0.04em 0.05em; }
+
+  /* Each comparable launch is one section */
+  section.launch {
+    padding: 80px var(--pad-x);
+    border-bottom: var(--line) solid var(--c-text-light);
+  }
+  section.launch .opener {
+    display: grid; grid-template-columns: 1fr 5fr; gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: var(--line) solid currentColor;
+    margin-bottom: 48px;
+  }
+  section.launch .num {
+    font-size: clamp(60px, 10vw, 140px);
+    color: var(--c-accent);
+    line-height: 0.88;
+  }
+  section.launch .meta h2 {
+    font-weight: var(--c-w-medium);
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  section.launch .meta .city {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  section.launch .reads {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  }
+  section.launch .reads .read .label {
+    font-size: 11px; font-weight: var(--c-w-medium);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 14px; display: block;
+  }
+  section.launch .reads .read p {
+    font-size: 16px; line-height: 1.6; max-width: 44ch;
+  }
+  @media (max-width: 860px) {
+    section.launch .opener { grid-template-columns: 1fr; }
+    section.launch .reads { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  /* Pattern closer */
+  section.pattern {
+    padding: 96px var(--pad-x);
+    background: var(--c-surface-dark);
+    color: var(--c-text-dark);
+  }
+  section.pattern .statement {
+    font-size: clamp(32px, 4.5vw, 60px);
+    font-weight: var(--c-w-medium);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 30ch;
+  }
+  section.pattern .statement .om-h {
+    background: var(--c-accent);
+    color: var(--c-text-light);
+    padding: 0 0.18em 0.04em 0.18em;
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="#cover" class="brand">[CLIENT]<br>COMPARABLE LAUNCHES</a>
+  <div>
+    <a href="#ref-01">01</a>
+    <a href="#ref-02">02</a>
+    <a href="#ref-03">03</a>
+    <a href="#ref-04">04</a>
+    <a href="#ref-05">05</a>
+    <a href="#pattern">Pattern</a>
+  </div>
+</nav>
+
+<header class="cover" id="cover">
+  <div style="font-size: 13px; letter-spacing: 0.02em;">[AGENCY] × [CLIENT] · COMPARABLE LAUNCHES</div>
+  <h1 class="cover-title">Comparable <span class="accent">launches.</span></h1>
+  <p style="max-width: 60ch; font-size: 18px;">
+    [Strapline. Five to eight reference projects, read for their communication style.]
+  </p>
+</header>
+
+<!-- Repeat one section per reference -->
+<section class="launch" id="ref-01">
+  <div class="opener">
+    <div class="num">01</div>
+    <div class="meta">
+      <h2>[Reference name]</h2>
+      <div class="city">[City, country]</div>
+    </div>
+  </div>
+  <div class="reads">
+    <div class="read">
+      <span class="label">How they positioned it</span>
+      <p>[One short paragraph on the launch positioning and communication.]</p>
+    </div>
+    <div class="read">
+      <span class="label">What we take from it</span>
+      <p>[One short paragraph on the move worth borrowing.]</p>
+    </div>
+  </div>
+</section>
+
+<!-- ref-02, ref-03 ... etc -->
+
+<section class="pattern" id="pattern">
+  <p class="statement">
+    [Pattern observation. One sentence with one or two words highlighted in <span class="om-h">accent</span>.]
+  </p>
+  <p style="margin-top: 28px; max-width: 60ch;">[Short follow-up paragraph if needed.]</p>
+</section>
+
+</body>
+</html>

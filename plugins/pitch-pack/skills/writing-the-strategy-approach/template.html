@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>[Client] [Project] — Strategy Approach</title>
+<style>
+  /* =============================================================
+     STRATEGY APPROACH — template
+     Replace the token values below with the client's design system.
+     See: porting-a-client-design-system / references/tokens-to-extract.md
+     ============================================================= */
+
+  /* Optional: load the client font from a local path
+  @font-face {
+    font-family: 'CLIENT_FONT';
+    src: url('path/to/CLIENT_FONT.woff2') format('woff2');
+    font-weight: 300; font-style: normal; font-display: swap;
+  }
+  */
+
+  :root {
+    /* ─── Surfaces ─── */
+    --c-surface-light: #DBE2E0;   /* OM Gray default */
+    --c-surface-dark:  #000000;
+    --c-text-light:    #000000;
+    --c-text-dark:     #FFFFFF;
+
+    /* ─── Accent ─── */
+    --c-accent:        #00FF00;   /* used sparingly */
+
+    /* ─── Type ─── */
+    --c-font:          'CLIENT_FONT', system-ui, sans-serif;
+    --c-w-light:       300;
+    --c-w-medium:      500;
+
+    /* ─── Layout ─── */
+    --pad-x:           6.5%;
+    --pad-x-mobile:    6%;
+    --line:            2px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--c-surface-light);
+    color: var(--c-text-light);
+    font-family: var(--c-font);
+    font-weight: var(--c-w-light);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.005em;
+  }
+
+  /* ─── Sticky nav ─── */
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--c-surface-light);
+    border-bottom: var(--line) solid var(--c-text-light);
+  }
+  nav.top .inner {
+    padding: 24px var(--pad-x) 22px;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
+  }
+  nav.top .brand {
+    font-weight: var(--c-w-medium);
+    font-size: 14px;
+    color: var(--c-text-light);
+    text-decoration: none;
+  }
+  nav.top ul { list-style: none; display: flex; gap: 20px; flex-wrap: wrap; }
+  nav.top a.link {
+    color: var(--c-text-light);
+    text-decoration: none;
+    font-weight: var(--c-w-light);
+    font-size: 12px;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+  }
+  nav.top a.link.active, nav.top a.link:hover { border-bottom-color: var(--c-text-light); }
+  @media (max-width: 860px) { nav.top ul { display: none; } }
+
+  /* ─── Cover ─── */
+  header.cover {
+    padding: 88px var(--pad-x) 80px;
+    border-bottom: var(--line) solid var(--c-text-light);
+    min-height: 80vh;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .cover-top {
+    display: flex; justify-content: space-between;
+    font-size: 13px; padding-bottom: 28px;
+    border-bottom: var(--line) solid var(--c-text-light);
+    letter-spacing: 0.02em;
+  }
+  .cover-title {
+    font-weight: var(--c-w-medium);
+    font-size: clamp(48px, 9vw, 140px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    margin: 80px 0 60px;
+    max-width: 14ch;
+  }
+  .cover-title .accent {
+    color: var(--c-text-light);
+    background: var(--c-accent);
+    padding: 0 0.05em 0.04em 0.05em;
+  }
+  .cover-strapline {
+    border-top: var(--line) solid var(--c-text-light);
+    padding-top: 28px;
+    max-width: 60ch;
+    font-size: clamp(17px, 1.4vw, 20px);
+  }
+
+  /* ─── Section frame ─── */
+  section.surface-light, section.surface-dark { padding-bottom: 120px; }
+  section.surface-light { background: var(--c-surface-light); color: var(--c-text-light); }
+  section.surface-dark  { background: var(--c-surface-dark);  color: var(--c-text-dark); }
+
+  /* ─── Section opener ─── */
+  .opener {
+    padding: 96px var(--pad-x) 72px;
+    border-bottom: var(--line) solid currentColor;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 48px;
+    align-items: end;
+  }
+  .opener .label-band {
+    grid-column: 1 / -1;
+    display: flex; justify-content: space-between;
+    padding-bottom: 24px;
+    border-bottom: var(--line) solid currentColor;
+    margin-bottom: 64px;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .opener .num {
+    font-size: clamp(80px, 14vw, 180px);
+    color: var(--c-accent);
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+  }
+  .opener .title {
+    font-weight: var(--c-w-medium);
+    font-size: clamp(38px, 6vw, 80px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+  .opener .title .accent {
+    color: var(--c-text-light);
+    background: var(--c-accent);
+    padding: 0 0.08em 0.04em 0.08em;
+  }
+  .opener .deck {
+    grid-column: 2 / -1;
+    margin-top: 40px;
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 62ch;
+  }
+  @media (max-width: 760px) {
+    .opener { grid-template-columns: 1fr; gap: 24px; padding: 64px var(--pad-x-mobile) 48px; }
+    .opener .deck { grid-column: 1 / -1; }
+  }
+
+  /* ─── Panel rhythm ─── */
+  .pane { padding: 80px var(--pad-x) 0; }
+  .pane.tight { padding-top: 48px; }
+  .pane.wide  { padding-top: 112px; }
+  .pane + .pane { padding-top: 96px; }
+
+  /* ─── Reusable bits (statement, row-2, single, etc) ─── */
+  .statement {
+    font-size: clamp(32px, 4.6vw, 60px);
+    font-weight: var(--c-w-medium);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 26ch;
+  }
+  .om-h {
+    background: var(--c-accent);
+    color: var(--c-text-light);
+    padding: 0 0.18em 0.04em 0.18em;
+    font-weight: var(--c-w-medium);
+  }
+  .kicker {
+    font-size: 11px;
+    font-weight: var(--c-w-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    display: block;
+    margin-bottom: 24px;
+  }
+  /* (Add the rest of the patterns from the worked example as needed:
+     .row-2, .single, .ring-block, .arc, .bench-row, .objective, .filters, etc.) */
+
+</style>
+</head>
+<body>
+
+<!-- ─── Sticky nav (10 sections) ─── -->
+<nav class="top">
+  <div class="inner">
+    <a href="#cover" class="brand">[CLIENT]<br>STRATEGY APPROACH</a>
+    <ul>
+      <li><a class="link" href="#moment">01 · Moment</a></li>
+      <li><a class="link" href="#problem">02 · Problem</a></li>
+      <li><a class="link" href="#audience">03 · Audience</a></li>
+      <li><a class="link" href="#stands-for">04 · Stands for</a></li>
+      <li><a class="link" href="#journey">05 · Journey</a></li>
+      <li><a class="link" href="#what-it-does">06 · What it does</a></li>
+      <li><a class="link" href="#comparables">07 · Comparables</a></li>
+      <li><a class="link" href="#success">08 · Success</a></li>
+      <li><a class="link" href="#avoid">09 · Avoid</a></li>
+      <li><a class="link" href="#creative">10 · To creative</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ─── Cover ─── -->
+<header class="cover" id="cover">
+  <div class="cover-top">
+    <div>[AGENCY] × [CLIENT]</div>
+    <div>STRATEGY APPROACH / [PROJECT]</div>
+  </div>
+  <h1 class="cover-title">Strategy <span class="accent">Approach.</span></h1>
+  <p class="cover-strapline">
+    [Strapline. The strategy work that sits underneath the creative. Replace with project-specific framing.]
+  </p>
+</header>
+
+<!-- ─── 01 · MOMENT ─── -->
+<section class="surface-light" id="moment">
+  <div class="opener">
+    <div class="label-band">
+      <span>01 · WHERE WE STAND</span>
+      <span>THE MOMENT</span>
+    </div>
+    <div class="num">01</div>
+    <div class="title">[Section title with <span class="accent">accent word.</span>]</div>
+    <div class="deck">[Short deck paragraph. Two to three sentences.]</div>
+  </div>
+
+  <div class="pane">
+    <span class="kicker">[KICKER]</span>
+    <p class="statement">[Big statement, one idea, isolated.]</p>
+  </div>
+
+  <!-- Add more panes as needed. One idea per pane. -->
+</section>
+
+<!-- ─── 02 · PROBLEM ─── -->
+<section class="surface-dark" id="problem">
+  <!-- Same pattern, dark surface. -->
+</section>
+
+<!-- Sections 03–10 follow the same pattern, alternating light/dark surfaces. -->
+
+<!-- ─── Sticky-nav active state ─── -->
+<script>
+  const links = document.querySelectorAll('nav.top a.link');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const id = en.target.id;
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+
+</body>
+</html>
