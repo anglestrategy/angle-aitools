@@ -10,7 +10,11 @@ const pageErrors = [];
 const failedRequests = [];
 
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 1500, height: 900 } });
+const page = await browser.newPage({
+  viewport: { width: 1500, height: 900 },
+  // sandboxed CI/egress proxies may re-sign TLS; opt in explicitly
+  ignoreHTTPSErrors: process.env.E2E_IGNORE_TLS === "1",
+});
 page.on("console", (msg) => {
   if (msg.type() === "error") consoleErrors.push(msg.text().slice(0, 300));
 });
