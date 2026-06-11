@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import { useStore } from "@/lib/store";
 import { useUI } from "@/lib/uiStore";
@@ -35,7 +35,7 @@ function ProjectViews({ project }: { project: Project }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const view = (searchParams.get("view") as ViewType | null) ?? project.defaultView;
-  const setView = (v: ViewType) => router.replace(`/app/projects/${project.id}?view=${v}`, { scroll: false });
+  const setView = (v: ViewType) => router.replace(`/app/project?id=${project.id}&view=${v}`, { scroll: false });
 
   const toggleFavorite = useStore((s) => s.toggleFavorite);
   const favorites = useStore((s) => s.favorites);
@@ -203,11 +203,11 @@ function ProjectViews({ project }: { project: Project }) {
   );
 }
 
-export default function ProjectPage() {
-  const params = useParams<{ projectId: string }>();
+function ProjectPageInner() {
+  const searchParams = useSearchParams();
   const projects = useStore((s) => s.projects);
   const hydrated = useStore((s) => s.hydrated);
-  const project = projects.find((p) => p.id === params.projectId);
+  const project = projects.find((p) => p.id === searchParams.get("id"));
 
   if (!project) {
     if (!hydrated) return null;
@@ -218,9 +218,13 @@ export default function ProjectPage() {
     );
   }
 
+  return <ProjectViews project={project} />;
+}
+
+export default function ProjectPage() {
   return (
     <Suspense>
-      <ProjectViews project={project} />
+      <ProjectPageInner />
     </Suspense>
   );
 }

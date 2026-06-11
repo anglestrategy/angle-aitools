@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { motion } from "motion/react";
 import React, { useMemo, useState } from "react";
 import { differenceInCalendarDays, format, parseISO, subDays } from "date-fns";
@@ -730,11 +731,11 @@ function DashboardDetail({ dashboard }: { dashboard: Dashboard }) {
   );
 }
 
-export default function DashboardDetailPage() {
-  const params = useParams<{ dashboardId: string }>();
+function DashboardDetailInner() {
+  const searchParams = useSearchParams();
   const dashboards = useStore((s) => s.dashboards);
   const hydrated = useStore((s) => s.hydrated);
-  const dashboard = dashboards.find((d) => d.id === params.dashboardId);
+  const dashboard = dashboards.find((d) => d.id === searchParams.get("id"));
 
   if (!dashboard) {
     if (!hydrated) return null;
@@ -755,4 +756,12 @@ export default function DashboardDetailPage() {
   }
 
   return <DashboardDetail dashboard={dashboard} />;
+}
+
+export default function DashboardDetailPage() {
+  return (
+    <Suspense>
+      <DashboardDetailInner />
+    </Suspense>
+  );
 }

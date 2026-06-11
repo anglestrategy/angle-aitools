@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useStore } from "@/lib/store";
 import { useUI } from "@/lib/uiStore";
 import { Sidebar } from "@/components/layout/Sidebar";
@@ -53,7 +53,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar />
+      {/* Suspense: Sidebar reads useSearchParams for project active-state */}
+      <Suspense>
+        <Sidebar />
+      </Suspense>
       <div className="flex min-w-0 flex-1 flex-col">
         <Topbar />
         <main className="min-h-0 flex-1 p-3 overflow-hidden">{children}</main>

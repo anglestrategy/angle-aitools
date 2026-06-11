@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import React, { useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { subDays } from "date-fns";
@@ -30,7 +31,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 320, damping: 26, delay: Math.min(index * 0.05, 0.35) }}
     >
-      <Link href={`/app/projects/${project.id}`} className="glass-card glass-hover sheen block p-4">
+      <Link href={`/app/project?id=${project.id}`} className="glass-card glass-hover sheen block p-4">
         <div className="flex items-center gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" style={{ backgroundColor: `${project.color}1e`, color: project.color }}>
             <Icon name={project.icon} size={19} />
@@ -57,8 +58,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
-export default function SpaceOverviewPage() {
-  const { spaceId } = useParams<{ spaceId: string }>();
+function SpaceOverviewInner() {
+  const spaceId = useSearchParams().get("id");
   const router = useRouter();
   const toast = useUI((s) => s.toast);
   const openNewProject = useUI((s) => s.openNewProject);
@@ -250,7 +251,7 @@ export default function SpaceOverviewPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ type: "spring", stiffness: 320, damping: 26, delay: Math.min(i * 0.04, 0.3) }}
               >
-                <Link href={`/app/docs/${d.id}`} className="glass-soft glass-hover flex items-center gap-3 rounded-xl px-3.5 py-2.5">
+                <Link href={`/app/doc?id=${d.id}`} className="glass-soft glass-hover flex items-center gap-3 rounded-xl px-3.5 py-2.5">
                   <span
                     className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
                     style={d.coverGradient ? { background: d.coverGradient } : { backgroundColor: "rgba(255,255,255,0.06)" }}
@@ -282,5 +283,13 @@ export default function SpaceOverviewPage() {
         }}
       />
     </div>
+  );
+}
+
+export default function SpaceOverviewPage() {
+  return (
+    <Suspense>
+      <SpaceOverviewInner />
+    </Suspense>
   );
 }

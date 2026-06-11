@@ -1176,7 +1176,7 @@ function TaskPanelInner({ task }: { task: Task }) {
   }, [closeTask, confirmDelete]);
 
   const copyLink = () => {
-    const url = `${window.location.origin}/app/projects/${task.projectId}?task=${task.id}`;
+    const url = `${window.location.origin}/app/project?id=${task.projectId}&task=${task.id}`;
     try {
       void navigator.clipboard.writeText(url);
     } catch {
@@ -1188,7 +1188,7 @@ function TaskPanelInner({ task }: { task: Task }) {
   const goToProject = () => {
     if (!project) return;
     closeTask();
-    router.push(`/app/projects/${project.id}`);
+    router.push(`/app/project?id=${project.id}`);
   };
 
   const toggleWatch = () => {

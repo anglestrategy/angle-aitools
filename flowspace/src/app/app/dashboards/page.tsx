@@ -52,7 +52,7 @@ function DashboardCard({ dashboard, index }: { dashboard: Dashboard; index: numb
     >
       <div
         onClick={() => {
-          if (!renaming) router.push(`/app/dashboards/${dashboard.id}`);
+          if (!renaming) router.push(`/app/dashboard?id=${dashboard.id}`);
         }}
         className="glass-card glass-hover sheen group relative cursor-pointer p-4"
       >
@@ -178,7 +178,7 @@ export default function DashboardsPage() {
     setNewOpen(false);
     setName("");
     setIcon(iconOptions[0]);
-    router.push(`/app/dashboards/${id}`);
+    router.push(`/app/dashboard?id=${id}`);
   };
 
   return (

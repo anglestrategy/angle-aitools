@@ -1,7 +1,7 @@
 import { chromium } from "playwright";
 import fs from "fs";
 
-const BASE = "http://localhost:3100";
+const BASE = process.env.E2E_BASE ?? "http://localhost:3100";
 const SHOT_DIR = "/tmp/flowspace-shots";
 fs.mkdirSync(SHOT_DIR, { recursive: true });
 
@@ -34,7 +34,7 @@ try {
   await page.click("text=Open the demo workspace");
   await page.waitForSelector("text=Ava Chen");
   await page.click("text=Ava Chen");
-  await page.waitForURL("**/app/home", { timeout: 15000 });
+  await page.waitForURL(/\/app\/home\/?$/, { timeout: 15000 });
   await page.waitForTimeout(1200);
   log("signed in, at:", page.url());
   await shot("02-home");
@@ -42,7 +42,7 @@ try {
   log("home shows Recents:", homeHasMyWork);
 
   // 3. project board view
-  await page.goto(`${BASE}/app/projects/pr_app?view=board`, { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/app/project?id=pr_app&view=board`, { waitUntil: "networkidle" });
   await page.waitForTimeout(1200);
   const columns = await page.locator("text=In Progress").count();
   log("board 'In Progress' occurrences:", columns);
@@ -67,14 +67,14 @@ try {
   await page.waitForTimeout(500);
 
   // 5. list view
-  await page.goto(`${BASE}/app/projects/pr_app?view=list`, { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/app/project?id=pr_app&view=list`, { waitUntil: "networkidle" });
   await page.waitForTimeout(1000);
   const listHasTask = await page.isVisible("text=Offline mode: local cache & sync engine");
   log("list shows seed task:", listHasTask);
   await shot("05-list");
 
   // 6. table view
-  await page.goto(`${BASE}/app/projects/pr_app?view=table`, { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/app/project?id=pr_app&view=table`, { waitUntil: "networkidle" });
   await page.waitForTimeout(1000);
   const tableHasSprint = await page.isVisible("text=Sprint");
   log("table shows custom field column 'Sprint':", tableHasSprint);
@@ -82,7 +82,7 @@ try {
 
   // 7. gantt + calendar + workload + overview quick render check
   for (const v of ["gantt", "calendar", "workload", "overview", "activity"]) {
-    await page.goto(`${BASE}/app/projects/pr_app?view=${v}`, { waitUntil: "networkidle" });
+    await page.goto(`${BASE}/app/project?id=pr_app&view=${v}`, { waitUntil: "networkidle" });
     await page.waitForTimeout(900);
     await shot(`07-${v}`);
     log(`${v} view rendered`);
@@ -98,11 +98,11 @@ try {
   }
 
   // 9. dashboard detail + doc editor
-  await page.goto(`${BASE}/app/dashboards/dash_exec`, { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/app/dashboard?id=dash_exec`, { waitUntil: "networkidle" });
   await page.waitForTimeout(1500);
   await shot("09-dashboard-exec");
   log("dashboard exec rendered");
-  await page.goto(`${BASE}/app/docs/doc_v4_prd`, { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/app/doc?id=doc_v4_prd`, { waitUntil: "networkidle" });
   await page.waitForTimeout(1500);
   const docHasContent = await page.isVisible("text=Product Requirements");
   log("doc editor shows PRD content:", docHasContent);
@@ -119,7 +119,7 @@ try {
   await page.keyboard.press("Escape");
 
   // 11. quick-create task via board quick add (probe: create + verify persistence)
-  await page.goto(`${BASE}/app/projects/pr_bugs?view=list`, { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/app/project?id=pr_bugs&view=list`, { waitUntil: "networkidle" });
   await page.waitForTimeout(900);
   const addBtn = page.locator("text=Add task").first();
   if (await addBtn.isVisible().catch(() => false)) {

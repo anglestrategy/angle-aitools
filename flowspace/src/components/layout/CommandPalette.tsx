@@ -111,7 +111,7 @@ export function CommandPalette() {
         iconColor: p.color,
         title: p.name,
         subtitle: spaces.find((s) => s.id === p.spaceId)?.name,
-        perform: () => go(`/app/projects/${p.id}`),
+        perform: () => go(`/app/project?id=${p.id}`),
       }));
     const spaceItems: CmdItem[] = spaces.map((s) => ({
       id: s.id,
@@ -120,7 +120,7 @@ export function CommandPalette() {
       iconColor: s.color,
       title: s.name,
       subtitle: "Space",
-      perform: () => go(`/app/spaces/${s.id}`),
+      perform: () => go(`/app/space?id=${s.id}`),
     }));
     const docItems: CmdItem[] = docs.map((dd) => ({
       id: dd.id,
@@ -128,7 +128,7 @@ export function CommandPalette() {
       icon: dd.icon,
       title: dd.title,
       subtitle: "Doc",
-      perform: () => go(`/app/docs/${dd.id}`),
+      perform: () => go(`/app/doc?id=${dd.id}`),
     }));
     const userItems: CmdItem[] = users.map((u) => ({
       id: u.id,
@@ -153,7 +153,7 @@ export function CommandPalette() {
       icon: dd.icon,
       title: dd.name,
       subtitle: "Dashboard",
-      perform: () => go(`/app/dashboards/${dd.id}`),
+      perform: () => go(`/app/dashboard?id=${dd.id}`),
     }));
     return [...actions, ...taskItems, ...projectItems, ...spaceItems, ...docItems, ...goalItems, ...dashItems, ...userItems];
     // eslint-disable-next-line react-hooks/exhaustive-deps

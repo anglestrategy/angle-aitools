@@ -102,7 +102,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 320, damping: 28, delay: index * 0.05 }}
     >
-      <Link href={`/app/projects/${project.id}`} className="glass-card glass-hover sheen group relative block p-4">
+      <Link href={`/app/project?id=${project.id}`} className="glass-card glass-hover sheen group relative block p-4">
         <div className="flex items-start gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" style={{ backgroundColor: `${project.color}22` }}>
             <Icon name={project.icon} size={19} style={{ color: project.color }} />

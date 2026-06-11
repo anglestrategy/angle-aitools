@@ -46,7 +46,7 @@ function DocCard({ doc, space, index }: { doc: Doc; space: Space | null; index: 
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 320, damping: 26, delay: Math.min(index * 0.04, 0.4) }}
-        onClick={() => !renaming && router.push(`/app/docs/${doc.id}`)}
+        onClick={() => !renaming && router.push(`/app/doc?id=${doc.id}`)}
         className="glass-card glass-hover sheen group relative cursor-pointer overflow-hidden"
       >
         {/* cover banner */}
@@ -98,7 +98,7 @@ function DocCard({ doc, space, index }: { doc: Doc; space: Space | null; index: 
                       spaceId: doc.spaceId,
                     });
                     toast("Doc duplicated", { body: `${doc.title} (copy)`, icon: "mingcute:copy-2-line" });
-                    router.push(`/app/docs/${id}`);
+                    router.push(`/app/doc?id=${id}`);
                   }}
                 />
                 <MenuSeparator />
@@ -198,7 +198,7 @@ export default function DocsPage() {
   const newDoc = () => {
     const id = createDoc();
     toast("Doc created", { body: "Untitled doc", icon: "mingcute:document-2-line" });
-    router.push(`/app/docs/${id}`);
+    router.push(`/app/doc?id=${id}`);
   };
 
   const sections: { key: string; label: React.ReactNode; docs: Doc[] }[] = [

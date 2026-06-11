@@ -285,7 +285,7 @@ export function NewProjectModal() {
     const id = createProject({ spaceId, name: name.trim(), icon, color, description: description.trim(), template });
     toastFn("Project created", { body: name.trim(), icon: "mingcute:folder-2-line" });
     close();
-    router.push(`/app/projects/${id}`);
+    router.push(`/app/project?id=${id}`);
   };
 
   const templates = [
@@ -441,7 +441,7 @@ export function NewSpaceModal() {
     const id = createSpace({ name: name.trim(), icon, color, description: description.trim(), private: priv });
     toastFn("Space created", { body: name.trim(), icon: "mingcute:box-3-line" });
     setOpen(false);
-    router.push(`/app/spaces/${id}`);
+    router.push(`/app/space?id=${id}`);
   };
 
   return (

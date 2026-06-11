@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import React, { useEffect, useRef, useState } from "react";
 import { EditorContent, useEditor, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -86,8 +87,8 @@ function FormatToolbar({ editor }: { editor: Editor }) {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export default function DocEditorPage() {
-  const { docId } = useParams<{ docId: string }>();
+function DocEditorInner() {
+  const docId = useSearchParams().get("id");
   const router = useRouter();
   const toast = useUI((s) => s.toast);
 
@@ -128,6 +129,7 @@ export default function DocEditorPage() {
     onUpdate: ({ editor }) => {
       // capture eagerly so a doc switch during the debounce can't clobber content
       const id = docIdRef.current;
+      if (!id) return;
       const html = editor.getHTML();
       if (saveTimer.current) clearTimeout(saveTimer.current);
       saveTimer.current = setTimeout(() => updateDocRef.current(id, { content: html }), 600);
@@ -371,5 +373,13 @@ export default function DocEditorPage() {
         }}
       />
     </div>
+  );
+}
+
+export default function DocEditorPage() {
+  return (
+    <Suspense>
+      <DocEditorInner />
+    </Suspense>
   );
 }

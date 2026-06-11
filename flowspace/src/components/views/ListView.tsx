@@ -589,7 +589,7 @@ function RowMenu({ task, project }: { task: Task; project: Project }) {
             icon="mingcute:link-2-line"
             label="Copy link"
             onClick={() => {
-              navigator.clipboard.writeText(`${window.location.origin}/app/projects/${project.id}?task=${task.id}`);
+              navigator.clipboard.writeText(`${window.location.origin}/app/project?id=${project.id}&task=${task.id}`);
               toast("Link copied to clipboard", { icon: "mingcute:link-2-line", kind: "info" });
             }}
           />

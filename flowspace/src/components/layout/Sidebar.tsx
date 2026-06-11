@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { useStore } from "@/lib/store";
 import { useUI } from "@/lib/uiStore";
@@ -59,6 +59,8 @@ function NavLink({
 export function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const activeProjectId = pathname === "/app/project" ? searchParams.get("id") : null;
   const collapsed = useUI((s) => s.sidebarCollapsed);
   const toggleSidebar = useUI((s) => s.toggleSidebar);
   const openNewProject = useUI((s) => s.openNewProject);
@@ -150,10 +152,10 @@ export function Sidebar() {
             {favProjects.map((p) => (
               <Link
                 key={p.id}
-                href={`/app/projects/${p.id}`}
+                href={`/app/project?id=${p.id}`}
                 className={cn(
                   "flex items-center gap-2 rounded-lg px-2 h-7 text-xs transition-colors",
-                  pathname.startsWith(`/app/projects/${p.id}`) ? "bg-white/8 text-white" : "text-white/55 hover:text-white hover:bg-white/5"
+                  activeProjectId === p.id ? "bg-white/8 text-white" : "text-white/55 hover:text-white hover:bg-white/5"
                 )}
               >
                 <Icon name="mingcute:star-fill" size={12} className="text-amber-300/90 shrink-0" />
@@ -188,7 +190,7 @@ export function Sidebar() {
               return (
                 <Link
                   key={space.id}
-                  href={`/app/spaces/${space.id}`}
+                  href={`/app/space?id=${space.id}`}
                   title={space.name}
                   className="my-1 flex h-9 items-center justify-center rounded-xl hover:bg-white/6 transition-colors"
                 >
@@ -209,7 +211,7 @@ export function Sidebar() {
                       <Icon name="mingcute:right-line" size={13} />
                     </motion.span>
                   </button>
-                  <Link href={`/app/spaces/${space.id}`} className="flex min-w-0 flex-1 items-center gap-2 cursor-pointer">
+                  <Link href={`/app/space?id=${space.id}`} className="flex min-w-0 flex-1 items-center gap-2 cursor-pointer">
                     <span className="flex h-5.5 w-5.5 shrink-0 items-center justify-center rounded-md" style={{ backgroundColor: `${space.color}25` }}>
                       <Icon name={space.icon} size={13} style={{ color: space.color }} />
                     </span>
@@ -235,11 +237,11 @@ export function Sidebar() {
                     >
                       <div className="ml-[18px] border-l border-white/8 pl-2 py-0.5">
                         {spaceProjects.map((p) => {
-                          const active = pathname.startsWith(`/app/projects/${p.id}`);
+                          const active = activeProjectId === p.id;
                           return (
                             <Link
                               key={p.id}
-                              href={`/app/projects/${p.id}`}
+                              href={`/app/project?id=${p.id}`}
                               className={cn(
                                 "flex items-center gap-2 rounded-lg px-2 h-7 text-xs transition-colors",
                                 active ? "bg-white/8 text-white" : "text-white/50 hover:text-white hover:bg-white/5"
