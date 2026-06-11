@@ -43,15 +43,15 @@ The agency pitch is literally the sidebar: *make work (Clients), do the creative
 | `/app/starred` | **MERGE → My Work** | A filter pretending to be a page. |
 | `/app/created-by-me` | **MERGE → My Work** | Same. |
 | `/app/spaces/*` + `/app/projects/*` | **KEEP** (rename UX to **Clients**) | The work tree. Container views pruned in §4. |
-| `/app/studio` | **KEEP — promote** | The differentiator: briefs (H-S), copy docs (H-C), reference library, inspiration/moodboards (H-D). Today it's buried; it becomes a headline destination. |
-| `/app/client-portal` | **KEEP** (rename **Delivery**) | Packages, proposals, review links, client accounts — the last-mile loop. Second differentiator. |
+| `/app/studio` | **KEEP — but recast (see §2b)** | Not a hub you visit; tasks *open into* discipline focus modes. Studio becomes the artifact library behind them. |
+| `/app/client-portal` | **KEEP** (rename **Delivery**) | Packages, proposals, review links, client accounts — the last-mile loop. Package assembly itself becomes the composition task's focus mode (§2b). |
 | `/app/whiteboards/*` | **HIDE (flag)** | Canvas depth unfinished per own tracker; agencies have FigJam. Revisit post-launch. *(Open question #1)* |
 | `/app/dashboards` | **KEEP** | Absorbs Reports as a tab. |
 | `/app/reports` | **MERGE → Dashboards** | Executive rollup = a report tab, not a third analytics home. |
 | `/app/workload` | **MERGE → Team** | One resourcing home, not three. |
 | `/app/teams` (Teams Hub) | **MERGE → Team** | Keep capacity/economics; **hide the activity feed** (ClickUp cosplay; Inbox + project activity cover it). |
 | `/app/timesheets` | **MERGE → Team** | Tab. Personal week-grid reachable from My Work too. |
-| `/app/chat` | **HIDE (flag)** | Biggest single cut. Agencies live in Slack; a half-good chat makes the product feel bloated, not converged. Services/schema stay for a future "comms on the graph" bet. |
+| `/app/chat` | **KEEP** | **Faisal's call (2026-06-11): the agency runs on WhatsApp, not Slack — native chat is a real wedge for non-Slack agencies.** Position as the WhatsApp replacement for work: channels tied to clients/campaigns, task-from-message, and later a WhatsApp bridge for client-side comms. Needs the same one-pass UI treatment as everything else. |
 | `/app/planner` | **HIDE (flag)** | Project calendar views + My Work cover v1. External calendar sync was deferred anyway. |
 | `/app/ai` (AI Hub) | **HIDE the destination** | The governed engine (runs, audit, policy — genuinely good) stays; AI resurfaces as *contextual* assists inside task panel, briefs, inbox digest. A separate AI tab is where AI goes to feel bolted-on. |
 | `/app/goals` | **HIDE (flag)** | Agencies don't buy OKR software. Revisit if mid-market demands it. |
@@ -60,7 +60,32 @@ The agency pitch is literally the sidebar: *make work (Clients), do the creative
 | `/app/demo` (+ guided presenter) | **HIDE from nav** | Sales tool, not product. Route stays, unlisted. |
 | `/app/request-forms` | **MERGE → Settings** | Builder is admin config; public `/forms/[slug]` untouched. |
 
-**Net: 24 → 8 destinations.** Nothing a customer would pay for is deleted; ~10 surfaces stop competing for attention.
+**Net: 24 → 9 destinations** (Chat stays per Faisal). Nothing a customer would pay for is deleted; ~9 surfaces stop competing for attention.
+
+---
+
+## 2b. Focus Mode — the Studio/Delivery rethink (Faisal's model, 2026-06-11)
+
+**Principle: the workbench is not a place you go; it's what a task becomes when you open it to do the work.**
+
+Every task/subtask carries a discipline (from its container, item type, or assignment). The task panel gets a single prominent **"Enter focus"** toggle that expands the task into a full-screen environment purpose-built for finishing *that* piece of work:
+
+| Task discipline | Focus environment contains |
+|---|---|
+| **Strategy** | Brief builder, research/benchmark collation, frameworks — the brief is written *inside the task*, not in a separate Studio record |
+| **Copy** | Distraction-free editor with the source brief pinned, tone/brand guardrails, AI variants, version diff — deliverable saves back to the task |
+| **Design** | Moodboard canvas, inspiration collators (Are.na / Behance / Pinterest-style sources + the existing reference library), AI generation (Magnific / Higgsfield / Flow-class integrations), asset versions — all anchored to the task |
+| **Composition (package)** | The package builder *is* this task type's focus mode: pull approved outputs from sibling tasks, QA checklist, send for client approval |
+| **BD (RFP)** | Source document with citation overlays, requirements review, proposal drafting (the existing H-BD flow, re-homed into the task) |
+
+Why this is right architecturally: it *completes* what the codebase was already discovering. PRs 61–62 and 174–186 kept dragging Studio context (references, moodboards, briefs, RFP actions) *into the task panel* because users wouldn't leave the task. Focus Mode finishes the thought — instead of summarizing the workbench inside a cramped panel, the task **unfolds into** the workbench. It's also the purest expression of the Angle Graph principle: "discipline work happens on nodes in that graph." The node is the door; the focus environment is the room.
+
+Consequences:
+- **Studio (the destination) demotes to a library** — browse all briefs/moodboards/references/copy docs across campaigns. Useful, secondary, not the way work gets done.
+- **Delivery (the destination) remains** for the client-facing side (accounts, review queue, what clients see) — but assembling a package happens in the composition task's focus mode.
+- The module registry maps `itemType`/discipline → focus surface. New disciplines become new focus modes, not new nav items.
+- v1 build order for focus modes: Strategy (brief) → Design (moodboard + sources + AI gen) → Composition (package) → Copy → BD re-home.
+- Scope honesty: "Photoshop-equivalent" editing is a later phase — v1 design focus mode is moodboarding, source collation, AI generation, annotation, and versioning; deep raster/vector editing comes via integration first (the project's own ADR-013 precedent: don't rebuild creative suites before the loop works).
 
 ---
 
