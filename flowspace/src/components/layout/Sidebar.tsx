@@ -133,11 +133,13 @@ export function Sidebar() {
         <NavLink href="/app/home" icon="mingcute:home-4-line" label="Home" collapsed={collapsed} />
         <NavLink href="/app/my-tasks" icon="mingcute:checkbox-line" label="My Tasks" badge={myOpenTasks} collapsed={collapsed} />
         <NavLink href="/app/inbox" icon="mingcute:inbox-line" label="Inbox" badge={unread} collapsed={collapsed} />
+        <NavLink href="/app/everything" icon="mingcute:planet-line" label="Everything" collapsed={collapsed} />
         <NavLink href="/app/docs" icon="mingcute:document-2-line" label="Docs" collapsed={collapsed} />
         <NavLink href="/app/goals" icon="mingcute:target-line" label="Goals" collapsed={collapsed} />
         <NavLink href="/app/dashboards" icon="mingcute:chart-pie-2-line" label="Dashboards" collapsed={collapsed} />
         <NavLink href="/app/timesheet" icon="mingcute:time-line" label="Timesheet" collapsed={collapsed} />
         <NavLink href="/app/automations" icon="mingcute:lightning-line" label="Automations" collapsed={collapsed} />
+        <NavLink href="/app/integrations" icon="mingcute:plugin-2-line" label="Integrations" collapsed={collapsed} />
       </div>
 
       <div className="mt-3 flex-1 overflow-y-auto px-2.5 pb-2">

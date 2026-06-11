@@ -44,6 +44,7 @@ import {
 } from "@/components/fields/pickers";
 import { CommentComposer, CommentsSection } from "./CommentComposer";
 import { ActivityFeed } from "./ActivityFeed";
+import { DependencySection } from "./DependencySection";
 
 // ─── Small helpers ──────────────────────────────────────────────────────────
 
@@ -1432,6 +1433,7 @@ function TaskPanelInner({ task }: { task: Task }) {
           <DescriptionSection key={`desc-${task.id}`} task={task} />
           <ChecklistSection key={`check-${task.id}`} task={task} />
           <SubtasksSection key={`sub-${task.id}`} task={task} />
+          <DependencySection key={`dep-${task.id}`} task={task} />
           <AttachmentsSection task={task} />
 
           {/* ── tabs ── */}

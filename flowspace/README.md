@@ -17,7 +17,7 @@ Open the landing page, hit **“Open the demo workspace”**, and sign in as any
 ### Work management core
 - **Workspace → Spaces → Projects → Tasks → Subtasks** hierarchy with private spaces, favorites, recents
 - **8 project views:** Overview (stats + charts), List (grouped, inline-editable), Board (Kanban with dnd-kit drag & drop), Table (spreadsheet w/ editable custom-field columns), Calendar (drag to reschedule), Gantt (drag/resize bars), Workload (capacity heat per person), Activity feed
-- **Tasks:** statuses (per-project workflows), priorities, multi-assignees, watchers, tags, start/due dates, estimates, story points, checklists, attachments, cover gradients, comments with reactions & @mentions, full activity history, time tracking with a live global timer
+- **Tasks:** statuses (per-project workflows), priorities, multi-assignees, watchers, tags, start/due dates, estimates, story points, checklists, attachments, cover gradients, dependencies (blocked-by / blocking with a live "Blocked" badge), comments with reactions & @mentions, full activity history, time tracking with a live global timer
 - **Custom fields:** text, number, select, multi-select, date, checkbox, URL, currency, rating, people, progress — editable in Table view and the task panel
 - **Filtering/grouping/sorting** persisted per project, shared across views
 

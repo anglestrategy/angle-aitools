@@ -12,6 +12,8 @@ import type {
   Comment,
   CustomFieldDef,
   Dashboard,
+  Dependency,
+  DependencyType,
   Doc,
   Goal,
   ID,
@@ -59,7 +61,8 @@ interface AutomationEvent {
     | "priority_changed"
     | "assignee_added"
     | "tag_added"
-    | "task_completed";
+    | "task_completed"
+    | "due_date_arrives";
   taskId: ID;
   /** event payload, e.g. new statusId / priority / userId / tagId */
   value?: string;
@@ -90,6 +93,12 @@ export interface DataState {
   recentProjectIds: ID[];
   viewStates: Record<string, ViewState>;
   notifiedDueIds: ID[];
+  dueAutomationFiredIds: ID[];
+  dependencies: Dependency[];
+
+  // dependencies
+  addDependency: (fromTaskId: ID, toTaskId: ID, type: DependencyType) => void;
+  removeDependency: (id: ID) => void;
 
   // auth
   login: (userId: ID) => void;
@@ -448,12 +457,39 @@ const initialData = () => ({
   recentProjectIds: ["pr_app", "pr_bugs", "pr_q3"],
   viewStates: {} as Record<string, ViewState>,
   notifiedDueIds: [] as ID[],
+  dueAutomationFiredIds: [] as ID[],
+  dependencies: [
+    { id: "dep_1", fromTaskId: "t_feed_rank", toTaskId: "t_feed_ab", type: "blocks" },
+    { id: "dep_2", fromTaskId: "t_teaser", toTaskId: "t_paid_ads", type: "waiting_on" },
+    { id: "dep_3", fromTaskId: "t_offline", toTaskId: "t_perf", type: "blocks" },
+  ] as Dependency[],
 });
 
 export const useStore = create<DataState>()(
   persist(
     immer((set, get) => ({
       ...initialData(),
+
+      // ── dependencies ──
+      addDependency: (fromTaskId, toTaskId, type) =>
+        set((d) => {
+          if (fromTaskId === toTaskId) return;
+          const exists = d.dependencies.some(
+            (dep) =>
+              (dep.fromTaskId === fromTaskId && dep.toTaskId === toTaskId) ||
+              (dep.fromTaskId === toTaskId && dep.toTaskId === fromTaskId)
+          );
+          if (exists) return;
+          d.dependencies.push({ id: uid("dep"), fromTaskId, toTaskId, type });
+          logActivity(d, "task", toTaskId, "dependency_added", {
+            other: d.tasks.find((t) => t.id === fromTaskId)?.title ?? "",
+            relation: type === "blocks" ? "blocked by" : "waiting on",
+          });
+        }),
+      removeDependency: (id) =>
+        set((d) => {
+          d.dependencies = d.dependencies.filter((x) => x.id !== id);
+        }),
 
       // ── auth ──
       login: (userId) =>
@@ -546,8 +582,10 @@ export const useStore = create<DataState>()(
         }),
       deleteProject: (id) =>
         set((d) => {
+          const removedTaskIds = new Set(d.tasks.filter((t) => t.projectId === id).map((t) => t.id));
           d.projects = d.projects.filter((x) => x.id !== id);
           d.tasks = d.tasks.filter((t) => t.projectId !== id);
+          d.dependencies = d.dependencies.filter((dep) => !removedTaskIds.has(dep.fromTaskId) && !removedTaskIds.has(dep.toTaskId));
           d.automations = d.automations.filter((a) => a.projectId !== id);
           d.favorites.projects = d.favorites.projects.filter((x) => x !== id);
           d.recentProjectIds = d.recentProjectIds.filter((x) => x !== id);
@@ -705,6 +743,7 @@ export const useStore = create<DataState>()(
           d.tasks = d.tasks.filter((t) => !ids.has(t.id));
           d.comments = d.comments.filter((c) => !ids.has(c.taskId));
           d.timeEntries = d.timeEntries.filter((te) => !ids.has(te.taskId));
+          d.dependencies = d.dependencies.filter((dep) => !ids.has(dep.fromTaskId) && !ids.has(dep.toTaskId));
           if (d.runningTimer && ids.has(d.runningTimer.taskId)) d.runningTimer = null;
         }),
 
@@ -1080,15 +1119,15 @@ export const useStore = create<DataState>()(
           if (!me) return;
           const today = todayStr();
           d.tasks.forEach((t) => {
-            if (
-              t.dueDate === today &&
-              !t.completedAt &&
-              !t.archived &&
-              t.assigneeIds.includes(me) &&
-              !d.notifiedDueIds.includes(t.id)
-            ) {
+            if (t.dueDate !== today || t.completedAt || t.archived) return;
+            if (t.assigneeIds.includes(me) && !d.notifiedDueIds.includes(t.id)) {
               d.notifiedDueIds.push(t.id);
               pushNotification(d, me, "due_soon", "Due today", `${t.title} is due today`, t.id, null);
+            }
+            // fire "when due date arrives" automations once per task
+            if (!d.dueAutomationFiredIds.includes(t.id)) {
+              d.dueAutomationFiredIds.push(t.id);
+              runAutomations(d, { type: "due_date_arrives", taskId: t.id });
             }
           });
         }),
