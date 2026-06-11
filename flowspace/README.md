@@ -53,3 +53,5 @@ src/
 ```
 
 The data layer is a single persisted store with an action API that mirrors a REST backend (create/update/delete per entity; side effects like activity logging, notifications and automation runs handled centrally) — swapping in a real API later means reimplementing `store.ts` actions against a server without touching the UI.
+
+— Live demo: https://anglestrategy.github.io/angle-aitools/
