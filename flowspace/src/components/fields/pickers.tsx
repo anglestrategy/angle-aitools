@@ -5,7 +5,7 @@ import type { ID, Priority, Project, Status, Tag, User } from "@/lib/types";
 import { useStore } from "@/lib/store";
 import { cn, formatDate, priorities, priorityMeta } from "@/lib/utils";
 import { Avatar, Badge, Checkbox, Icon, Input, StatusDot } from "@/components/ui/primitives";
-import { MenuItem, MenuLabel, MenuList, MenuSeparator, Popover } from "@/components/ui/overlay";
+import { MenuItem, MenuLabel, MenuList, Popover } from "@/components/ui/overlay";
 
 // ─── Status picker ──────────────────────────────────────────────────────────
 

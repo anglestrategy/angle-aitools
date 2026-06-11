@@ -1,10 +1,14 @@
 "use client";
 
-import { Icon as Iconify } from "@iconify/react";
+import { Icon as Iconify, addCollection } from "@iconify/react";
+import mingcuteIcons from "@iconify-json/mingcute/icons.json";
 import { motion } from "motion/react";
 import React from "react";
 import type { User } from "@/lib/types";
 import { cn } from "@/lib/utils";
+
+// bundle the MingCute set so icons render offline & without flicker
+addCollection(mingcuteIcons);
 
 // ─── Icon ───────────────────────────────────────────────────────────────────
 

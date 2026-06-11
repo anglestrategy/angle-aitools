@@ -7,7 +7,7 @@ import { useStore } from "@/lib/store";
 import { Avatar, Icon } from "@/components/ui/primitives";
 
 const features = [
-  { icon: "mingcute:kanban-line", title: "Every view you need", body: "List, Board, Table, Calendar, Gantt and Workload — switch instantly, filters follow you." },
+  { icon: "mingcute:columns-3-line", title: "Every view you need", body: "List, Board, Table, Calendar, Gantt and Workload — switch instantly, filters follow you." },
   { icon: "mingcute:lightning-line", title: "Automations", body: "No-code rules that assign, move, tag and notify so your team never does robot work." },
   { icon: "mingcute:document-2-line", title: "Docs & Goals", body: "Connected docs and measurable goals live next to the work, not in another tab." },
   { icon: "mingcute:chart-line-line", title: "Dashboards", body: "Real-time widgets for status, workload, time and trends across every project." },

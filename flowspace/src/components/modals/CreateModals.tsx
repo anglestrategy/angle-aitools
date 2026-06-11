@@ -1,12 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useStore } from "@/lib/store";
 import { useUI } from "@/lib/uiStore";
 import { cn, colorPalette } from "@/lib/utils";
 import type { ID, Priority } from "@/lib/types";
-import { Button, Icon, Input, Textarea } from "@/components/ui/primitives";
+import { Button, Icon, Textarea } from "@/components/ui/primitives";
 import { MenuItem, MenuList, Modal, ModalHeader, Popover } from "@/components/ui/overlay";
 import { AssigneePicker, DatePicker, PriorityPicker, TagPicker } from "@/components/fields/pickers";
 import { AvatarStack, Badge } from "@/components/ui/primitives";
@@ -202,7 +202,7 @@ export function NewTaskModal() {
           </TagPicker>
 
           <div className="glass-soft flex items-center gap-1.5 rounded-lg px-2.5 h-8">
-            <Icon name="mingcute:hourglass-line" size={13} className="text-white/45" />
+            <Icon name="mingcute:sandglass-line" size={13} className="text-white/45" />
             <input
               type="number"
               min={0}

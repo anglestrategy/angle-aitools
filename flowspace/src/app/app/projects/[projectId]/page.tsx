@@ -23,7 +23,7 @@ import { ProjectSettingsModal } from "@/components/modals/ProjectSettingsModal";
 const viewMeta: Record<ViewType, { label: string; icon: string }> = {
   overview: { label: "Overview", icon: "mingcute:compass-line" },
   list: { label: "List", icon: "mingcute:list-check-line" },
-  board: { label: "Board", icon: "mingcute:kanban-line" },
+  board: { label: "Board", icon: "mingcute:columns-3-line" },
   table: { label: "Table", icon: "mingcute:table-2-line" },
   calendar: { label: "Calendar", icon: "mingcute:calendar-month-line" },
   gantt: { label: "Gantt", icon: "mingcute:chart-horizontal-line" },
@@ -53,6 +53,13 @@ function ProjectViews({ project }: { project: Project }) {
   useEffect(() => {
     touchRecent(project.id);
   }, [project.id, touchRecent]);
+
+  // support deep links like /app/projects/{id}?task={taskId} (copy-link)
+  const openTaskPanel = useUI((s) => s.openTask);
+  const linkedTaskId = searchParams.get("task");
+  useEffect(() => {
+    if (linkedTaskId) openTaskPanel(linkedTaskId);
+  }, [linkedTaskId, openTaskPanel]);
 
   const isFav = favorites.projects.includes(project.id);
   const progress = projectProgress(tasks, project);

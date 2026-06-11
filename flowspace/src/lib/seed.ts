@@ -421,7 +421,7 @@ export const seedDashboards: Dashboard[] = [
     { id: uid("w"), type: "goalProgress", title: "Goals", w: 6, h: 2, config: {} },
     { id: uid("w"), type: "recentActivity", title: "Recent activity", w: 6, h: 2, config: {} },
   ]},
-  { id: "dash_sprint", name: "Sprint Health", icon: "mingcute:pulse-line", createdBy: "u_marcus", createdAt: daysAgo(14), widgets: [
+  { id: "dash_sprint", name: "Sprint Health", icon: "mingcute:heartbeat-2-line", createdBy: "u_marcus", createdAt: daysAgo(14), widgets: [
     { id: uid("w"), type: "numberCard", title: "In progress", w: 3, h: 1, config: { metric: "inProgress" } },
     { id: uid("w"), type: "numberCard", title: "In review", w: 3, h: 1, config: { metric: "inReview" } },
     { id: uid("w"), type: "numberCard", title: "Overdue", w: 3, h: 1, config: { metric: "overdue" } },
