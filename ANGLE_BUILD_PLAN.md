@@ -173,12 +173,19 @@ That single loop — brief → design → deliver — is the demoable wedge. Str
 
 ---
 
-## 9. Open questions for Faisal
+## 9. Decisions locked (2026-06-14)
 
-1. **Phase 1 vertical:** confirm the first loop is Client Servicing brief → Design maker workspace → CS package/deliver (Strategy/Copy makers and BD pipeline deferred)?
-6. **Strategy altitude:** task-scoped only, or does Strategy also need a project-level workspace (campaign strategy as a project artifact)?
-7. **Disciplines under each department:** confirm the full list (e.g. Creative → Design, Copy, Motion?) so the registry is sized right.
-2. **Generation provider for the Design Gallery v1:** Magnific, Higgsfield, Flow, or a cheap default to prove the loop first?
-3. **Canvas/editor tech:** OK to spend a day-long spike to pick one canvas lib + confirm Tiptap, rather than me decreeing it?
-4. **Dogfood target:** which real Angle Strategy engagement is the first one we run through it?
-5. **House standards:** seed the Document/Strategy companion with your existing frameworks/brief templates as the default shelf content?
+- **Phase 1 vertical confirmed:** Client Servicing brief → Design maker workspace → CS package/deliver. Strategy/Copy makers and BD pipeline deferred.
+- **Strategy is task-scoped only** — no project-level strategy workspace.
+- **Discipline taxonomy confirmed** (department → workspace altitude):
+  - **Business Development** — leads/pipeline (pre-client, orchestration). Not task-assigned.
+  - **Client Servicing** — client + project (orchestration): WhatsApp-bridge comms, brief authoring → task creation, management overview. Not task-assigned.
+  - **Strategy** — task (maker): strategy/brief workspace.
+  - **Creative** — task (maker), a *family* by sub-discipline: Design, Copy, Motion (later).
+
+## 10. Open questions remaining
+
+1. **Generation provider for the Design workspace v1:** Magnific, Higgsfield, GoogleFlow, Krea, or a cheap default to prove the loop first?
+2. **Canvas/editor tech:** OK to spend a day-long spike to pick one canvas lib + confirm Tiptap, rather than decreeing it?
+3. **Dogfood target:** which real Angle Strategy engagement is the first run through it?
+4. **House standards:** seed the brief-authoring + strategy companions with your existing frameworks/brief templates as default shelf content?
