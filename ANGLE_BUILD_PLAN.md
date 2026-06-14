@@ -182,16 +182,15 @@ That single loop — brief → design → deliver — is the demoable wedge. Str
   - **Client Servicing** — client + project (orchestration): WhatsApp-bridge comms, brief authoring → task creation, management overview. Not task-assigned.
   - **Strategy** — task (maker): strategy/brief workspace.
   - **Creative** — task (maker), a *family* by sub-discipline: Design, Copy, Motion (later).
-- **Generation is an aggregator, not a single model.** The Design workspace exposes many models under one roof (Magnific-style). Build a **model-gateway adapter** (recommend fal.ai or Replicate for breadth + direct hooks to Magnific/Higgsfield/Krea) so models are added/removed without UI change; designer picks the model per job. v1: wire the gateway + 2–3 models to prove the loop.
+- **Generation is an aggregator, not a single model.** The Design workspace exposes many models under one roof (Magnific-style). Build a **model-gateway adapter** (fal.ai or Replicate for breadth + direct premium hooks) so models are added/removed without UI change; designer picks the model per job. **First models wired: Nano Banana (Google Gemini image) and GPT-Image (OpenAI gpt-image-1).** Premium hooks (Magnific/Higgsfield/Krea) follow.
 - **House standards captured (seed content):**
   - **Brief schema** = the canonical 11-field template (Appendix A). This is the object CS authors and that travels to the maker task.
   - **Strategy shelf** = the 16-section `what_is_strategy_enhanced` framework (Client Understanding → Brief Alignment → Approach → Research → Strategy/Narrative/Platform → Messaging → Channel → Creative → Activation → Activities → Media → Rollout → Governance → Measurement) as the Strategy workspace question bank.
 - **Dogfood target = Waha / Linear Park (New Murabba).** Real mini-competition pitch; brief maps cleanly to the 11-field schema; full asset set already in Drive. First real run through the Phase-1 vertical.
 
-## 10. Open questions remaining
+## 10. Status: ready to execute
 
-1. **Canvas/editor tech:** confirmed OK to spend a day-long spike to pick one canvas lib + confirm Tiptap.
-2. **Gateway specifics:** which premium providers to hook first beyond the breadth gateway (designers' current daily tools)?
+No blocking questions. Confirmed: canvas/editor chosen via a day-long spike at Phase-1 start; first gen models = Nano Banana + GPT-Image. Next action is **Phase 0** on `angle-pm`.
 
 ---
 
