@@ -17,6 +17,38 @@ That model is the product's moat and its file format. It is the one thing you ca
 
 ---
 
+## 1A. Look & feel — the visual system (Faisal's reference, 2026-06-15)
+
+The north star is Faisal's reference mock: a **dark, calm, grainy, editorial** editor where the artboard is the only bright object and every instrument floats and recedes. This **overrides the "warm off-white paper" note** in the earlier UX direction — the *surround is dark*; the *artwork* is bright. (Pro convention, and easier on the eyes for long sessions.)
+
+**Surface & mood**
+- Near-black **warm charcoal** (~`#17171A`, slightly warm — not pure black) with a fine **grain/noise** texture across the whole field.
+- **The artboard is the one lit object.** At rest the workspace reads as a quiet studio table at night — instruments stay dark until touched.
+- **Everything floats:** top bar, left tool rail, right inspector, bottom dock are rounded glass panels (radius ~12–16px) on the dark field — hairline borders at low opacity, one soft ambient shadow, **no hard shadows or heavy headers.**
+
+**Accent — one warm tone, extreme restraint**
+- A single **amber/gold** accent (brand warm) is the *only* saturated color. It appears only on: **selection chrome** (bounding box + 8 square handles + the live `W × H` dimension badge + snap guides), the brand avatar, and active status dots. Everything else is grayscale. The restraint is what makes it calm.
+
+**Typography**
+- UI sans (Inter or brand sans) for labels, inputs, body.
+- **Monospace** for coordinates, dimensions, breadcrumbs, and file names (`Stillness_Concept_v2 / Frame 1`, `280 × 120`, `Mouse 820, 440`).
+- Section labels (`LAYOUT`, `TYPOGRAPHY`, `FILL`, `LAYERS`): small-caps, letter-spaced, ~55–60% opacity — a whisper, never a title bar.
+
+**Layout (Figma information architecture, calm dark skin)**
+- **Top bar:** brand mark left (`z.`-style) · File / Edit / View menus (muted) · **center document pill** (status dot + filename + chevron — the `.zen`/native-format switcher) · Export + circular avatar right.
+- **Left:** icon-only **floating tool rail** (select · marquee · pen · type · ellipse/shape · rectangle), active tool in a subtle rounded chip.
+- **Right inspector** (the precise-control surface, build per §4.2): **Design / Prototype** tabs · align & distribute row · then sectioned panels — **LAYOUT** (X/Y/W/H numeric fields + ratio-link), **TYPOGRAPHY** (font / weight / size), **FILL** (swatch + hex + opacity %), **LAYERS** (tree with per-type icons, selected row chipped). This is the numeric inspector Photoshop/Illustrator/Figma users expect — non-negotiable for "pro."
+- **Bottom:** floating **asset/inspiration dock** — a horizontal film-strip of thumbnails + an add button.
+- **Status bar** (bottom center, muted monospace): cursor coords · zoom · color space (`Display P3`) · `Cloud Sync` dot.
+
+**Motion:** spring physics (per the Flowspace craft bar) — panels slide/fade, selection handles and dimension badge ease in, generated/dropped assets settle onto the canvas rather than snapping.
+
+**Reconciliation with §4.15 (inspiration):** the **bottom dock** is the always-on quick strip of pinned references; the full **mood-wall** from §4.15 is an expandable deep-browse view summoned from the dock (or `[`). One feeds the other; they are not two separate stores.
+
+> Note: `z.` / `.zen` / `Zenjiwa Studio` in the mock are placeholders — the Angle brand mark, native-format extension, and warm-accent hue come from Angle's brand system. The *structure, restraint, and mood* are what we adopt.
+
+---
+
 ## 2. The foundation stack
 
 | Layer | Library | License | Role |
