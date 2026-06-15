@@ -49,6 +49,35 @@ The north star is Faisal's reference mock: a **dark, calm, grainy, editorial** e
 
 ---
 
+## 1B. The UX system — panels, controls & interaction (the instrument layer)
+
+§1A defines how the workspace *looks*; this defines how it *behaves* — and it is its own milestone because the "clunky" feeling in pro editors almost never comes from the engine. It comes from the connective tissue: panels that don't dock/float/persist, controls that are inconsistent and imprecise, tool options scattered across surfaces, no shortcut/command system, weak canvas feedback. **If each feature milestone invents its own controls, the tool drifts into incoherence.** So this is built once, early, as a shared system, and every later milestone consumes it.
+
+**Seven pillars:**
+
+1. **Panel system.** Dockable / stackable / tabbed panels; collapse-to-icon; resize via dividers; **tear-off to float and re-dock**; auto-hide; full-bleed **focus mode** (one key hides all chrome, canvas edge-to-edge). Saved **workspace presets** (panel arrangements) per task — e.g. "Layout," "Paint," "Type" — which dovetails with Angle's department-workspace idea. Panel state persists per user + document type.
+
+2. **Control component library — one set, reused everywhere** (the root cure for inconsistency): **scrubbable numeric fields** (drag-on-label, Shift = coarse / Alt = fine, unit-aware, math eval like `100+20`), linked/ratio field groups, sliders, angle dial, the curve & gradient editors, color picker + eyedropper, swatch grid, segmented controls, toggles, search-selects. One spacing/sizing grid, one set of hover/active/focus/disabled states, one label convention (§1A small-caps). **No panel rolls its own controls.**
+
+3. **Contextual tool-options.** A slim contextual bar (or context-driven inspector region) that changes with the active tool — brush → size/hardness/flow/spacing; pen → stroke; type → font/size; selection → align — so settings live *where the tool is*, not scattered.
+
+4. **Canvas HUD, overlays, cursors & navigation.** Rulers + draggable guides + grid + amber smart/snap guides; the selection dimension badge; pixel grid at high zoom; artboard breadcrumb. **Tool-specific cursors** including the **brush-size ring** (critical for painting). Navigation: zoom-to-fit / 100% / selection, space-hand-pan, pinch, optional minimap; a calm zoom HUD.
+
+5. **Command & input system.** Comprehensive **keyboard shortcuts** (single-key tool switch, modifiers, user-customizable, conflict handling); **⌘K command palette** (every action searchable — consistent with Angle/Flowspace); **right-click context menus** (per canvas / object / panel); and the **modifier conventions** (Shift-constrain, Alt-from-center/duplicate, Space-pan, ⌘-temp-move).
+
+6. **Feedback & state (plain-language law).** Calm narrated progress for heavy/generative ops (no spinner-with-percent), toasts, inline validation, empty states, hover affordances, **drag ghosts + drop targets**, snap feedback, undo/redo + a history panel, and the save/Cloud-Sync status. Status is narrated, not coded.
+
+7. **Cohesion layer — tokens + a11y + density.** Design tokens (spacing, radii, type scale, motion, the single amber accent, MingCute iconography) that every control consumes so panels can't drift; **comfortable / compact** density; keyboard navigability, focus rings, contrast, reduced-motion, adequate hit targets. Dark is default (§1A); light is a later token swap.
+
+**Sequencing — this is a foundation *and* a standing gate, not a one-shot:**
+- **Build the framework early (DW-0.5):** establish the panel system + control library + command/shortcut system + contextual tool-options + HUD scaffolding immediately after DW-0's shell, and **retrofit DW-0/DW-1 controls into it** so nothing reinvents controls downstream.
+- **Standing gate:** every later milestone (DW-2 onward) must build its UI *from* this library — adding a bespoke control is a spec violation unless the library is deliberately extended.
+- **Final cohesion pass (pre-launch, folded into DW-7):** a dedicated consistency + ergonomics audit across every surface.
+
+**Acceptance:** panels dock/float/collapse/persist and a saved workspace preset restores; **every numeric field in the app scrubs and evaluates math identically**; the contextual tool-options bar changes correctly per tool; ⌘K runs any action and all documented shortcuts work; brush-size ring + rulers + snap guides render on the canvas; reduced-motion + keyboard nav + focus rings verified; a consistency audit shows controls/spacing/labels identical across panels. Browser evidence + zero console errors.
+
+---
+
 ## 2. The foundation stack
 
 | Layer | Library | License | Role |
@@ -228,6 +257,7 @@ The reference browser is not an afterthought; it's the maker's mood wall and it 
 10. The **tiling + worker + dirty-rect performance architecture**.
 11. The **interop adapters** (model ↔ PSD/SVG/PDF) around ag-psd/pdf.js/Paper/pdf-lib.
 12. The **inspiration ingestion + mood-wall** (URL snapshot, Are.na connector, visual search, reference→canvas, reference→generation bridge) over the existing reference library.
+13. The **UX system** (§1B): the panel framework, the single reused control library (scrubbable numeric fields, editors, pickers), the command/shortcut/context-menu system, contextual tool-options, and the canvas HUD/cursors — the connective tissue that keeps every surface coherent.
 
 Everything else is wiring around purchased-for-free leverage.
 
@@ -238,6 +268,7 @@ Everything else is wiring around purchased-for-free leverage.
 | Phase | Deliverable | Done when |
 |---|---|---|
 | **DW-0 Spine** | PixiJS canvas + document model + layer tree/panel + pan/zoom + move/transform + raster layer from image + PNG export | Drop an image, add layers, reorder, transform, export — feels solid |
+| **DW-0.5 UX system** | Panel framework (dock/float/collapse/persist + workspace presets) + the one control library (scrubbable fields etc.) + ⌘K/shortcuts/context menus + contextual tool-options + canvas HUD/cursors; retrofit DW-0/1 controls into it | Per §1B acceptance; all later milestones build *from* this library |
 | **DW-1 Vector** | Paper.js geometry: pen, shapes, fills/strokes, boolean ops, SVG export | Draw and edit a real key-visual layout |
 | **DW-2 Raster paint** | Brush engine, eraser, fills, layer masks, basic adjustments (levels/curves/hue) | Paint + mask + adjust non-destructively |
 | **DW-3 Type** | opentype.js text layers, point/area/path type, char/para panels, convert-to-outlines | Set headline + body type on the canvas |
@@ -245,7 +276,7 @@ Everything else is wiring around purchased-for-free leverage.
 | **DW-2.5 Inspiration** | Are.na connector + universal URL snapshot + mood-wall display + drag-to-canvas + reference-as-style-input | Paste/pull a reference, it lands on the wall and steers a generation |
 | **DW-5 Generative** | Gateway generate-to-canvas, generative fill/expand, remove-bg, upscale — all B1-governed, F3-versioned | Brief-seeded prompt → layer; mask + prompt → fill |
 | **DW-6 Effects + interop** | Smart filters, layer styles, adjustment layers; **PSD read/write** (ag-psd), PDF export | Import a real PSD, edit, export PSD + PDF |
-| **DW-7 Collab + history** | Yjs presence + CRDT doc, hybrid undo, smart objects | Two makers in one document live |
+| **DW-7 Collab + history + cohesion** | Yjs presence + CRDT doc, hybrid undo, smart objects, **+ the final UX cohesion/ergonomics audit (§1B) across all surfaces** | Two makers in one document live; consistency audit passes |
 
 DW-0 → DW-5 is the sellable wedge (a designer does real key-visual work, AI-assisted). DW-6/7 deepen it.
 
