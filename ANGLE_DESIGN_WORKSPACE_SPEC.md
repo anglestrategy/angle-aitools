@@ -136,6 +136,40 @@ This is where you beat Adobe on *integration*, not brush count. All model calls 
 - ▸ Take: **Yjs** + an awareness provider (y-websocket worker, or y-webrtc for p2p) — replaces `@tldraw/sync`, free and proven.
 - ▸ Build: bind the document model to a Yjs doc (structure as shared types; raster tiles synced as binary updates or via blob refs), live cursors/selection presence on the canvas, and "viewer joining a running AI round polls instead of re-driving it."
 
+### 4.15 Inspiration sources — connect & display (the left rail)
+The reference browser is not an afterthought; it's the maker's mood wall and it feeds generation. The hard part is that every source has a different connection reality, and scraping at scale is a ToS/legal liability — so the architecture is **universal URL ingestion as the backbone, official APIs where they exist, and an extension for one-click save.**
+
+**Connection reality per source:**
+
+| Source | Reality | Our path |
+|---|---|---|
+| **Are.na** | Clean open REST API (`api.are.na`), OAuth, channels/blocks | **First-class connector** — browse the user's channels in-app, pull blocks directly. The easy win; build this one fully. |
+| **Pinterest** | API v5 exists but needs OAuth + app review; scraping violates ToS | OAuth connector to read the user's own boards/pins; otherwise URL snapshot. |
+| **Behance** | Public API deprecated by Adobe (~2020); none today | URL snapshot + oEmbed for individual projects. No board browsing. |
+| **Cosmos / Dribbble / any site** | Cosmos has no public API; Dribbble has a limited OAuth API | **Universal URL snapshot** (the fallback that always works); Dribbble OAuth optional later. |
+
+**Ingestion (three paths, all land in one reference store):**
+1. **Universal URL snapshot (backbone, build first):** paste any URL → server fetches → extract Open Graph / oEmbed / `<img>` candidates → snapshot the best image + source metadata (title, author, source URL, dominant colors) → store as a **reference asset**. Works for a Pinterest pin, a Behance project, an Are.na block, a Cosmos post, or any random website.
+2. **API connectors:** Are.na (full browse), Pinterest (own boards via OAuth) — let the user *browse and pull* rather than paste one URL at a time. Keys in Settings → Integrations.
+3. **Browser extension / bookmarklet:** "Save to Angle" from anywhere — the Pinterest-save muscle memory, pointed at the workspace.
+
+**Libraries — ▸ Take:**
+- **metascraper** / **open-graph-scraper** (MIT) — server-side metadata + image extraction.
+- **Playwright** (Apache-2.0) — full-page snapshot when og:image is missing/poor (already in the repo for e2e).
+- **node-vibrant** (MIT) — extract the **color swatch palettes** shown on each reference card.
+- **@xenova/transformers** / **onnxruntime-web** (Apache/MIT) — **CLIP image embeddings** for "find similar" + visual search (reuse Angle's existing H-D-REF/INSPIRE embedding-similarity if already built).
+- Are.na: thin REST client (no heavy dep).
+
+**▸ Build:**
+- The **reference asset model** (snapshot blob + source URL/attribution + palette + embedding + tags), reusing Angle's reference library (`H-D-REF/INSPIRE`) — no parallel store.
+- The **mood-wall display**: masonry, image-forward cards, color band, source badge, hover title, filter pills (All / Pinterest / Behance / Are.na / Cosmos) that fill with brand ink only when active (matches the UX direction already sent).
+- **Visual search** ("more like this") over CLIP embeddings; text search over metadata.
+- **Drag onto canvas** → the reference lands as a **non-exporting reference layer** (visible while working, excluded from final export) or, on explicit drop-as-asset, a real raster layer.
+- **Reference → generation bridge:** a pinned reference becomes a **style/structure input** to the gateway (`references[].type: style`) so "generate in the direction of these" works — the inspiration wall literally steers Nano Banana / GPT-Image.
+- **Attribution kept** end-to-end (source URL on every reference) — important for an agency citing inspiration provenance.
+
+**Scope honesty:** v1 = Are.na connector + universal URL snapshot + extension + mood-wall + drag-to-canvas + reference-as-style-input. Pinterest OAuth and Dribbble are phase 2; no scraping farm, ever.
+
 ---
 
 ## 5. What to take from each app (feature parity map)
@@ -161,6 +195,7 @@ This is where you beat Adobe on *integration*, not brush count. All model calls 
 9. The **hybrid history** (patches + tile diffs) and **Yjs collaboration binding**.
 10. The **tiling + worker + dirty-rect performance architecture**.
 11. The **interop adapters** (model ↔ PSD/SVG/PDF) around ag-psd/pdf.js/Paper/pdf-lib.
+12. The **inspiration ingestion + mood-wall** (URL snapshot, Are.na connector, visual search, reference→canvas, reference→generation bridge) over the existing reference library.
 
 Everything else is wiring around purchased-for-free leverage.
 
@@ -175,6 +210,7 @@ Everything else is wiring around purchased-for-free leverage.
 | **DW-2 Raster paint** | Brush engine, eraser, fills, layer masks, basic adjustments (levels/curves/hue) | Paint + mask + adjust non-destructively |
 | **DW-3 Type** | opentype.js text layers, point/area/path type, char/para panels, convert-to-outlines | Set headline + body type on the canvas |
 | **DW-4 Selections + AI** | Marquee/lasso/wand + SAM select-subject + refine edge + selection↔mask↔path | One-click cut out a subject |
+| **DW-2.5 Inspiration** | Are.na connector + universal URL snapshot + mood-wall display + drag-to-canvas + reference-as-style-input | Paste/pull a reference, it lands on the wall and steers a generation |
 | **DW-5 Generative** | Gateway generate-to-canvas, generative fill/expand, remove-bg, upscale — all B1-governed, F3-versioned | Brief-seeded prompt → layer; mask + prompt → fill |
 | **DW-6 Effects + interop** | Smart filters, layer styles, adjustment layers; **PSD read/write** (ag-psd), PDF export | Import a real PSD, edit, export PSD + PDF |
 | **DW-7 Collab + history** | Yjs presence + CRDT doc, hybrid undo, smart objects | Two makers in one document live |
