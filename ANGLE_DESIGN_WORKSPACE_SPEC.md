@@ -70,8 +70,8 @@ The north star is Faisal's reference mock: a **dark, calm, grainy, editorial** e
 7. **Cohesion layer — tokens + a11y + density.** Design tokens (spacing, radii, type scale, motion, the single amber accent, MingCute iconography) that every control consumes so panels can't drift; **comfortable / compact** density; keyboard navigability, focus rings, contrast, reduced-motion, adequate hit targets. Dark is default (§1A); light is a later token swap.
 
 **Sequencing — this is a foundation *and* a standing gate, not a one-shot:**
-- **Build the framework early (DW-0.5):** establish the panel system + control library + command/shortcut system + contextual tool-options + HUD scaffolding immediately after DW-0's shell, and **retrofit DW-0/DW-1 controls into it** so nothing reinvents controls downstream.
-- **Standing gate:** every later milestone (DW-2 onward) must build its UI *from* this library — adding a bespoke control is a spec violation unless the library is deliberately extended.
+- **As-built reality (2026-06-15):** DW-2 began before DW-0.5. Rather than interrupt the in-flight raster/engine work, DW-0.5 runs as a **consolidation pass *after* DW-2** — extracting and retrofitting DW-0/DW-1/DW-2 controls into one library — guarded by an **interim directive during DW-2** (any new UI uses shared control primitives in one location, minimal styling, actions in one registry) so the consolidation is extraction, not rewrite. The original "build it first" intent stands for any future engine; for this run it's a near-term consolidation.
+- **Standing gate:** every later milestone (DW-3 onward) must build its UI *from* this library — adding a bespoke control is a spec violation unless the library is deliberately extended.
 - **Final cohesion pass (pre-launch, folded into DW-7):** a dedicated consistency + ergonomics audit across every surface.
 
 **Acceptance:** panels dock/float/collapse/persist and a saved workspace preset restores; **every numeric field in the app scrubs and evaluates math identically**; the contextual tool-options bar changes correctly per tool; ⌘K runs any action and all documented shortcuts work; brush-size ring + rulers + snap guides render on the canvas; reduced-motion + keyboard nav + focus rings verified; a consistency audit shows controls/spacing/labels identical across panels. Browser evidence + zero console errors.
@@ -268,7 +268,7 @@ Everything else is wiring around purchased-for-free leverage.
 | Phase | Deliverable | Done when |
 |---|---|---|
 | **DW-0 Spine** | PixiJS canvas + document model + layer tree/panel + pan/zoom + move/transform + raster layer from image + PNG export | Drop an image, add layers, reorder, transform, export — feels solid |
-| **DW-0.5 UX system** | Panel framework (dock/float/collapse/persist + workspace presets) + the one control library (scrubbable fields etc.) + ⌘K/shortcuts/context menus + contextual tool-options + canvas HUD/cursors; retrofit DW-0/1 controls into it | Per §1B acceptance; all later milestones build *from* this library |
+| **DW-0.5 UX system** *(runs after DW-2 as a consolidation pass — see §1B)* | Panel framework (dock/float/collapse/persist + workspace presets) + the one control library (scrubbable fields etc.) + ⌘K/shortcuts/context menus + contextual tool-options + canvas HUD/cursors; retrofit DW-0/1/2 controls into it | Per §1B acceptance; all later milestones build *from* this library |
 | **DW-1 Vector** | Paper.js geometry: pen, shapes, fills/strokes, boolean ops, SVG export | Draw and edit a real key-visual layout |
 | **DW-2 Raster paint** | Brush engine, eraser, fills, layer masks, basic adjustments (levels/curves/hue) | Paint + mask + adjust non-destructively |
 | **DW-3 Type** | opentype.js text layers, point/area/path type, char/para panels, convert-to-outlines | Set headline + body type on the canvas |
